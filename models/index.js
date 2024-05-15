@@ -1,6 +1,7 @@
 
 module.exports = {
-    Club: require('./Club')
+    Club: require('./Club'),
+    Member: require('./Member'),
 }
 
 
