@@ -7,6 +7,10 @@ const ClubSchema = new Schema({
     time: String,
     image: String,
     description: String,
+    group: [{
+      type: Schema.Types.ObjectId,
+      ref: 'Member'
+  }]
   },
   {timestamps: true});
   
