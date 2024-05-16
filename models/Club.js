@@ -7,7 +7,7 @@ const ClubSchema = new Schema({
     time: String,
     image: String,
     description: String,
-    group: [{
+    members: [{
       type: Schema.Types.ObjectId,
       ref: 'Member'
   }]

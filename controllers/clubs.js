@@ -1,5 +1,6 @@
 const express = require('express')
-const {Club} = require('../models')
+const {Club, Member} = require('../models')
+
 
 
 
@@ -44,12 +45,41 @@ const update = async (req,res,next) => {
     }
   };
   
+
+  const addMember = async (req, res) => {
+    const { id } = req.params;
+    const { memberId } = req.body;
+
+    try {
+      const club = await Club.findById(id);
+      if (!club) {
+          return res.status(404).json({ message: 'Club not found' });
+      }
+
+      const member = await Member.findById(memberId);
+      if (!member) {
+          return res.status(404).json({ message: 'Member not found' });
+      }
+console.log(club)
+      if (!club.members.includes(memberId)) {
+          club.members.push(memberId);
+          await club.save();
+      }
+
+      res.status(201).json(member);
+  } catch (error) {
+    console.log(error);  
+    res.status(500).json({ message: 'Server error', error });
+  }
+}
+
   module.exports = {
       index,
       create,
       show,
       delete: destroy,
-      update
+      update, 
+      addMember
   }
   
 
