@@ -60,7 +60,7 @@ const update = async (req,res,next) => {
       if (!member) {
           return res.status(404).json({ message: 'Member not found' });
       }
-console.log(club)
+console.log(club);
       if (!club.members.includes(memberId)) {
           club.members.push(memberId);
           await club.save();
