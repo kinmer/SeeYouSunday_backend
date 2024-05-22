@@ -5,11 +5,12 @@ const { Club } = require('../models');
 
 
 const create = async(req, res) => {
+    console.log("creating")
   try {
-    const { clubId } = req.params;
+    const { id } = req.params;
     const { topic, date, description } = req.body;
 
-    const club = await Club.findById(clubId);
+    const club = await Club.findById(id);
     if (!club) return res.status(404).json({ message: "Club not found" });
 
     const newEvent = {
@@ -27,11 +28,24 @@ const create = async(req, res) => {
   }
 }
 
-async function deleteEvent(req, res) {
-  try {
-    const { clubId, eventId } = req.params;
+const index = async (req, res) => {
+    try {
+      const { id } = req.params;
+  
+      const club = await Club.findById(id);
+      if (!club) return res.status(404).json({ message: "Club not found" });
+  
+      res.status(200).json(club.events);
+    } catch (error) {
+      res.status(500).json({ message: "Error fetching events", error });
+    }
+  }
 
-    const club = await Club.findById(clubId);
+const deleteEvent = async (req, res) => {
+  try {
+    const { id, eventId } = req.params;
+
+    const club = await Club.findById(id);
     if (!club) return res.status(404).json({ message: "Club not found" });
 
     const eventIndex = club.events.findIndex(event => event.id === eventId);
@@ -48,5 +62,6 @@ async function deleteEvent(req, res) {
 
 module.exports = {
     create,
+    index,
     delete: deleteEvent
   };

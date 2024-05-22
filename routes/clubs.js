@@ -13,3 +13,8 @@ router.post('/:id/addMember', clubsCtrl.addMember);
 
 
 module.exports = router
+
+
+
+
+
